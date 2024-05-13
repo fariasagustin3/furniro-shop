@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
 import { products } from "../data"
+import { Link } from "react-router-dom"
 
 const sortOptions = [
   {
@@ -53,30 +54,32 @@ const ProductsPage = () => {
         <div className="flex flex-wrap items-start justify-center gap-10">
           {products.slice(0, 16).map((product) => (
             // product item
-            <div key={product.id} className="relative w-56 h-96 bg-[#dfe0e2]">
-              {product.trending && (
-                <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
-                  <div className="flex items-center justify-center w-full h-full">
-                    <span className="text-[8px] text-white">TOP</span>
+            <Link key={product.id} to={`/shop/${product.id}`}>
+              <div className="relative w-56 h-96 bg-[#f0f1f3]">
+                {product.trending && (
+                  <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
+                    <div className="flex items-center justify-center w-full h-full">
+                      <span className="text-[8px] text-white">TOP</span>
+                    </div>
                   </div>
-                </div>
-              )}
-              {product.discount && (
-                <div className="absolute top-2 left-2 bg-red-400 w-7 h-7 rounded-full">
-                  <div className="flex items-center justify-center w-full h-full">
-                    <span className="text-[8px] text-white">-{product.discount}%</span>
+                )}
+                {product.discount && (
+                  <div className="absolute top-2 left-2 bg-red-400 w-7 h-7 rounded-full">
+                    <div className="flex items-center justify-center w-full h-full">
+                      <span className="text-[8px] text-white">-{product.discount}%</span>
+                    </div>
                   </div>
+                )}
+                <img src={product.image} alt="" className="w-56 h-72 object-cover" />
+                <div className="px-3 py-2 flex flex-col gap-2">
+                  <span className="text-sm font-bold text-[#3A3A3A]">{product.title}</span>
+                  <span className="text-xs font-medium text-[#898989]">{product.categoryName}</span>
+                  <span className="text-sm font-bold text-[#3A3A3A]">${product.price}</span>
                 </div>
-              )}
-              <img src={product.image} alt="" className="w-56 h-72 object-cover" />
-              <div className="px-3 py-2 flex flex-col gap-2">
-                <span className="text-sm font-bold text-[#3A3A3A]">{product.title}</span>
-                <span className="text-xs font-medium text-[#898989]">{product.categoryName}</span>
-                <span className="text-sm font-bold text-[#3A3A3A]">${product.price}</span>
               </div>
-            </div>
+            </Link>
           ))}
-          
+
           {/* pagination */}
           <div className="w-full flex items-center justify-center gap-5 my-10">
             <button onClick={() => setSelected(1)} className={selected === 1 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>1</button>
