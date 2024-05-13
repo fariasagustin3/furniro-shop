@@ -1,6 +1,37 @@
 const Banner = () => {
   return (
-    <div>Banner</div>
+    <div className="w-screen h-full py-16 px-20 bg-[#FAF3EA]">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <img src="/high-quality.png" alt="" className="w-10" />
+          <div className="flex flex-col justify-start">
+            <span className="font-semibold text-lg text-[#242424]">High Quality</span>
+            <span className="font-medium text-sm text-[#898989]">crafted from top materials</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <img src="/warranty.png" alt="" className="w-10" />
+          <div className="flex flex-col justify-start">
+            <span className="font-semibold text-lg text-[#242424]">Warranty Protection</span>
+            <span className="font-medium text-sm text-[#898989]">Over 2 years</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <img src="/free-shipping.png" alt="" className="w-10" />
+          <div className="flex flex-col justify-start">
+            <span className="font-semibold text-lg text-[#242424]">Free Shipping</span>
+            <span className="font-medium text-sm text-[#898989]">Order over 150 $</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <img src="/support.png" alt="" className="w-10" />
+          <div className="flex flex-col justify-start">
+            <span className="font-semibold text-lg text-[#242424]">{"24 / 7 Support"}</span>
+            <span className="font-medium text-sm text-[#898989]">Dedicated support</span>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

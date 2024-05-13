@@ -88,6 +88,7 @@ const HomePage = () => {
         <h2 className="text-2xl font-bold text-[#333333] mb-10 text-center">Our Products</h2>
         <div className="flex flex-wrap justify-center items-start gap-10 ">
           {trendingProducts?.slice(0, 8).map((product) => (
+            // product item
             <div key={product.id} className="relative w-56 h-96 bg-[#dfe0e2]">
               {product.trending && (
                 <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
