@@ -8,15 +8,15 @@ const CheckoutPage = () => {
     <main>
       <Navbar />
       <Portrait page="Checkout" />
-      <div className="px-20">
-        <div className="flex flex-row items-start justify-center gap-10 my-10">
+      <div className="md:px-20 px-10">
+        <div className="flex flex-col md:flex-row items-start justify-center gap-10 my-10">
 
           {/* left side form */}
-          <form className="flex flex-col flex-1 gap-10">
+          <form className="flex flex-col flex-1 gap-10 w-full">
             <h1 className="text-slate-800 font-bold text-3xl my-10">Billing Details</h1>
 
             {/* name - last name */}
-            <div className="flex items-center gap-5 w-full">
+            <div className="flex flex-col md:flex-row items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">First Name</label>
                 <input type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
@@ -101,8 +101,8 @@ const CheckoutPage = () => {
           </form>
 
           {/* right side payment methods */}
-          <div className="flex flex-col flex-1 mt-20">
-            <div className="flex flex-col px-20 gap-5">
+          <div className="flex w-full flex-col flex-1 mt-20">
+            <div className="flex flex-col md:px-20 gap-5">
               <div className="flex flex-row items-center justify-between">
                 <span className="font-medium text-2xl">Product</span>
                 <span className="font-medium text-2xl">Subtotal</span>
