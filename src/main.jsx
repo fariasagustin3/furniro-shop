@@ -8,6 +8,7 @@ import {
 import HomePage from './pages/HomePage.jsx';
 import ProductsPage from './pages/ProductsPage.jsx';
 import SingleProductPage from './pages/SingleProductPage.jsx';
+import CartPage from './pages/CartPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/shop/:id",
     element: <SingleProductPage />
+  },
+  {
+    path: "/cart",
+    element: <CartPage />
   },
 ])
 
