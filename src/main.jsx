@@ -13,39 +13,45 @@ import CheckoutPage from './pages/CheckoutPage.jsx';
 import ProductsByCategoriesPage from './pages/ProductsByCategoriesPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
+import { jwtDecode } from 'jwt-decode';
+
+const token = localStorage.getItem("token")
+if(token) {
+  const decodedToken = jwtDecode(token)
+}
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />
+    element: !token ? <LoginPage /> : <HomePage />
   },
   {
     path: "/shop",
-    element: <ProductsPage />
+    element: !token ? <LoginPage /> : <ProductsPage />
   },
   {
     path: "/shop/:id",
-    element: <SingleProductPage />
+    element: !token ? <LoginPage /> : <SingleProductPage />
   },
   {
     path: "/cart",
-    element: <CartPage />
+    element: !token ? <LoginPage /> : <CartPage />
   },
   {
     path: "/checkout",
-    element: <CheckoutPage />
+    element: !token ? <LoginPage /> : <CheckoutPage />
   },
   {
     path: "/shop/category/:categoryName",
-    element: <ProductsByCategoriesPage />
+    element: !token ? <LoginPage /> : <ProductsByCategoriesPage />
   },
   {
     path: "/login",
-    element: <LoginPage />
+    element: token ? <HomePage /> : <LoginPage />
   },
   {
     path: "/register",
-    element: <RegisterPage />
+    element: token ? <HomePage /> : <RegisterPage />
   },
 ])
 
