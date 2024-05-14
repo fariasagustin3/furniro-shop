@@ -14,7 +14,7 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", input);
+      const response = await axios.post("https://furniro-app-backend.onrender.com/auth/login", input);
       localStorage.setItem("token", response.data.token);
       setInput({
         email: "",
