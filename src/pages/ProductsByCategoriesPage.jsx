@@ -27,11 +27,11 @@ const ProductsByCategoriesPage = () => {
       <Portrait page={categoryName} />
 
       {/* filters */}
-      <div className="px-40 py-10 w-screen bg-[#F9F1E7]">
-        <div className="flex items-center justify-between">
+      <div className="px-10 md:px-40 py-10 w-screen bg-[#F9F1E7] mb-10">
+        <div className="flex flex-col md:flex-row gap-5 md:gap-0 items-center justify-between">
           <span className="font-semibold text-sm">{"Showing 1–16 of 32 results"}</span>
           {/* filter items */}
-          <div className="flex gap-10">
+          <div className="flex gap-10 flex-col items-center md:flex-row">
             {/* products quantity */}
             <div className="flex items-center gap-2">
               <span>Show</span>
