@@ -3,6 +3,7 @@ import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
+import { isMobile } from "react-device-detect"
 
 const cartProducts = [
   {
@@ -45,16 +46,16 @@ const CartPage = () => {
       <Navbar />
       <Portrait page="Cart" />
       <div className="w-screen h-full">
-        <div className="px-20 flex flex-row items-start justify-center gap-10 my-5">
+        <div className="px-5 md:px-20 flex flex-col md:flex-row items-start justify-center gap-10 my-5">
 
           {/* left side table */}
-          <table className="w-full flex-[2.5]">
+          <table className="w-full md:flex-[2.5]">
             <thead>
               <tr className="bg-[#F9F1E7]">
                 <th className="py-5 font-medium text-sm">Product</th>
                 <th className="font-medium text-sm">Price</th>
                 <th className="font-medium text-sm">Quantity</th>
-                <th className="font-medium text-sm">Subtotal</th>
+                <th className={isMobile ? "hidden" : "font-medium text-sm"}>Subtotal</th>
                 <th className="font-medium text-sm">Action</th>
               </tr>
             </thead>
@@ -67,7 +68,9 @@ const CartPage = () => {
                   </td>
                   <td className="text-center font-semibold text-[#9F9F9F] text-sm">${product.price}</td>
                   <td className="text-center text-sm font-semibold">{product.quantity}</td>
-                  <td className="text-center text-sm font-medium">{product.subtotal}</td>
+                  {!isMobile && (
+                    <td className="text-center text-sm font-medium">{product.subtotal}</td>
+                  )}
                   <td className="text-center">
                     <button className="cursor-pointer">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#B88E2F" className="w-full h-6">
@@ -81,7 +84,7 @@ const CartPage = () => {
           </table>
 
           {/* right side summary */}
-          <div className="flex flex-col flex-1 px-10 py-10 gap-10 bg-[#F9F1E7] items-center shadow-xl">
+          <div className="w-full flex flex-col flex-1 px-10 py-10 gap-10 bg-[#F9F1E7] items-center shadow-xl">
             <h2 className="text-2xl font-bold text-center">Cart Total</h2>
             <div className="w-full flex flex-row items-center justify-between">
               <span className="font-semibold text-xl">Subtotal</span>
