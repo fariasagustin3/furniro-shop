@@ -1,7 +1,7 @@
 const Banner = () => {
   return (
-    <div className="w-screen h-full py-16 px-20 bg-[#FAF3EA]">
-      <div className="flex items-center justify-between">
+    <div className="w-screen h-full py-16 md:px-20 bg-[#FAF3EA]">
+      <div className="flex flex-wrap gap-10 md:gap-0 px-20 md:px-0 items-center md:justify-between">
         <div className="flex items-center gap-3">
           <img src="/high-quality.png" alt="" className="w-10" />
           <div className="flex flex-col justify-start">

@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
 import { products } from "../data"
 import { Link } from "react-router-dom"
+import { isMobile } from "react-device-detect"
 
 const sortOptions = [
   {
@@ -26,11 +27,11 @@ const ProductsPage = () => {
       <Portrait page="Shop" />
 
       {/* filters */}
-      <div className="px-40 py-10 w-screen bg-[#F9F1E7]">
-        <div className="flex items-center justify-between">
+      <div className="px-10 md:px-40 py-10 w-screen bg-[#F9F1E7] mb-10">
+        <div className="flex flex-col md:flex-row gap-5 md:gap-0 items-center justify-between">
           <span className="font-semibold text-sm">{"Showing 1–16 of 32 results"}</span>
           {/* filter items */}
-          <div className="flex gap-10">
+          <div className="flex gap-10 flex-col items-center md:flex-row">
             {/* products quantity */}
             <div className="flex items-center gap-2">
               <span>Show</span>
@@ -38,7 +39,7 @@ const ProductsPage = () => {
             </div>
             <div className="flex items-center gap-2">
               <span>Short By</span>
-              <select className="w-40 text-sm py-3">
+              <select className="w-40 text-sm py-3 focus:outline-none">
                 <option disabled selected>Sort By</option>
                 {sortOptions.map((opt) => (
                   <option key={opt.id}>{opt.option}</option>
@@ -81,7 +82,7 @@ const ProductsPage = () => {
           ))}
 
           {/* pagination */}
-          <div className="w-full flex items-center justify-center gap-5 my-10">
+          <div className="w-full flex flex-wrap items-center justify-center gap-5 my-10">
             <button onClick={() => setSelected(1)} className={selected === 1 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>1</button>
             <button onClick={() => setSelected(2)} className={selected === 2 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>2</button>
             <button onClick={() => setSelected(3)} className={selected === 3 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>3</button>
@@ -90,8 +91,10 @@ const ProductsPage = () => {
           </div>
         </div>
       </div>
-
-      <Banner />
+      
+      {/* {!isMobile && ( */}
+        <Banner />
+      {/* // )} */}
       <Footer />
     </main >
   )

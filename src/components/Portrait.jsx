@@ -1,6 +1,6 @@
 const Portrait = ({ page }) => {
   return (
-    <div className="relative w-screen h-full">
+    <div className="relative w-screen h-60 md:h-full">
       <img src="/portrait-image.png" alt="" className="w-full h-full object-cover" />
       <div className="absolute top-0 bottom-0 right-0 left-0 m-auto w-full h-full">
         <div className="flex flex-col gap-3 items-center justify-center w-full h-full">
