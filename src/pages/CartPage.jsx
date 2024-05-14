@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
@@ -90,7 +91,9 @@ const CartPage = () => {
               <span className="font-semibold text-xl">Total</span>
               <span className="font-medium text-[#B88E2F] text-xl">$1200</span>
             </div>
-            <button className="border-[2px] border-gray-600 w-max px-5 py-4 rounded-md text-sm font-semibold">CHECK OUT</button>
+            <Link to="/checkout">
+              <button className="border-[2px] border-gray-600 w-max px-5 py-4 rounded-md text-sm font-semibold">CHECK OUT</button>
+            </Link>
           </div>
         </div>
       </div>
