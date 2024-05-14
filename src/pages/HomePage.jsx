@@ -30,7 +30,7 @@ const HomePage = () => {
   };
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       {/* header section */}
       <div className="relative w-screen h-screen">

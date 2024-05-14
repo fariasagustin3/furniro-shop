@@ -22,7 +22,7 @@ const ProductsPage = () => {
   const [selected, setSelected] = useState(1)
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       <Portrait page="Shop" />
 

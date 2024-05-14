@@ -5,7 +5,7 @@ import Portrait from "../components/Portrait"
 
 const CheckoutPage = () => {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       <Portrait page="Checkout" />
       <div className="md:px-20 px-10">

@@ -22,7 +22,7 @@ const ProductsByCategoriesPage = () => {
   const { categoryName } = useParams()
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       <Portrait page={categoryName} />
 

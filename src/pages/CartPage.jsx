@@ -42,7 +42,7 @@ const cartProducts = [
 
 const CartPage = () => {
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       <Portrait page="Cart" />
       <div className="w-screen h-full">

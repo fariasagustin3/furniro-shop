@@ -18,7 +18,7 @@ const SingleProductPage = () => {
   const [tab, setTab] = useState("description")
 
   return (
-    <main>
+    <main className="overflow-x-hidden">
       <Navbar />
       <div className="w-full py-10 bg-[#F9F1E7]">
         <div className="flex items-center gap-4 px-20">
