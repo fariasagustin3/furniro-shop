@@ -10,6 +10,7 @@ import ProductsPage from './pages/ProductsPage.jsx';
 import SingleProductPage from './pages/SingleProductPage.jsx';
 import CartPage from './pages/CartPage.jsx';
 import CheckoutPage from './pages/CheckoutPage.jsx';
+import ProductsByCategoriesPage from './pages/ProductsByCategoriesPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <CheckoutPage />
+  },
+  {
+    path: "/shop/category/:categoryName",
+    element: <ProductsByCategoriesPage />
   },
 ])
 
