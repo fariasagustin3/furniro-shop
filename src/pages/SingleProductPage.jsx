@@ -40,11 +40,11 @@ const SingleProductPage = () => {
       </div>
 
       {/* product data */}
-      <div className="px-10 mx-20 flex flex-col gap-10 mt-10 mb-10">
-        <div className="w-full flex flex-row items-start justify-center gap-10 h-full -mb-32">
+      <div className="px-10 md:mx-20 flex flex-col gap-10 mt-10 mb-10">
+        <div className="w-full flex flex-col md:flex-row md:items-start items-center justify-center gap-10 md:h-full md:-mb-32">
 
           {/* left side */}
-          <div className="flex-1 bg-[#F9F1E7] px-10 py-10 rounded-md">
+          <div className="flex-1 bg-[#F9F1E7] w-80 md:w-full px-10 py-10 rounded-md">
             <img src="/single-product.png" alt="" className="w-full" />
           </div>
 
@@ -53,7 +53,7 @@ const SingleProductPage = () => {
             <div className="flex flex-col gap-5">
               <h1 className="m-0 text-[40px] font-medium">Aasgard Sofa</h1>
               <span className="text-[20px] font-medium text-[#9F9F9F]">$20</span>
-              <p className="text-xs font-medium w-2/3">
+              <p className="md:text-xs text-sm font-medium md:w-2/3">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae animi at cupiditate
                 aliquam eveniet delectus non qui quasi doloremque facilis eos, illo sit facere aliquid minima
                 quos accusantium sed?
@@ -108,11 +108,11 @@ const SingleProductPage = () => {
 
         <hr />
 
-        <div>
+        <div className="">
           {/* buttons */}
           <div className="flex flex-row items-center gap-10 justify-center">
-            <span onClick={() => setTab("description")} className={tab === "description" ? "cursor-pointer text-black font-semibold" : "cursor-pointer text-[#9F9F9F]"}>Description</span>
-            <span onClick={() => setTab("additional-information")} className={tab === "additional-information" ? "cursor-pointer text-black font-semibold" : "cursor-pointer text-[#9F9F9F]"}>Additional Information</span>
+            <span onClick={() => setTab("description")} className={tab === "description" ? "cursor-pointer text-black font-semibold text-center" : "cursor-pointer text-[#9F9F9F] text-center"}>Description</span>
+            <span onClick={() => setTab("additional-information")} className={tab === "additional-information" ? "cursor-pointer text-black font-semibold text-center" : "cursor-pointer text-[#9F9F9F] text-center"}>Additional Information</span>
           </div>
         </div>
 
@@ -134,7 +134,7 @@ const SingleProductPage = () => {
         ) : (
           // additional information
           <div className="w-full flex justify-center ">
-            <table className="w-1/2">
+            <table className="md:w-1/2 w-full">
               {Object.entries(properties).map((prop, index) => (
                 <tr key={index} className={(index % 2 === 0 || index === 0) ? "bg-gray-100" : "bg-slate-200"}>
                   <td className="text-center font-semibold py-5 text-sm">{prop[0]}</td>
