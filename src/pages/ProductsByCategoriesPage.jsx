@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
@@ -20,6 +20,10 @@ const sortOptions = [
 const ProductsByCategoriesPage = () => {
   const [selected, setSelected] = useState(1)
   const { categoryName } = useParams()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <main className="overflow-x-hidden">

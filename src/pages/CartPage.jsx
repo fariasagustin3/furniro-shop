@@ -4,6 +4,7 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
 import { isMobile } from "react-device-detect"
+import { useEffect } from "react"
 
 const cartProducts = [
   {
@@ -41,6 +42,10 @@ const cartProducts = [
 ]
 
 const CartPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <main className="overflow-x-hidden">
       <Navbar />

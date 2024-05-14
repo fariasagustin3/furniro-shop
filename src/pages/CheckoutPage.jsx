@@ -1,9 +1,14 @@
+import { useEffect } from "react"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
 
 const CheckoutPage = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   return (
     <main className="overflow-x-hidden">
       <Navbar />

@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const properties = {
   Width: "20cm",
@@ -16,6 +16,10 @@ const SingleProductPage = () => {
   const { id } = useParams()
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState("description")
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <main className="overflow-x-hidden">

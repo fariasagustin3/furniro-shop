@@ -17,6 +17,7 @@ const HomePage = () => {
       }
     })
     setTrendingProducts(arr)
+    window.scrollTo(0, 0)
   }, [])
 
   const handleNext = () => {
