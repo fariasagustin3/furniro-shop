@@ -23,35 +23,35 @@ if(token) {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: !token ? <LoginPage /> : <HomePage />
+    element: <HomePage />
   },
   {
     path: "/shop",
-    element: !token ? <LoginPage /> : <ProductsPage />
+    element: <ProductsPage />
   },
   {
     path: "/shop/:id",
-    element: !token ? <LoginPage /> : <SingleProductPage />
+    element: <SingleProductPage />
   },
   {
     path: "/cart",
-    element: !token ? <LoginPage /> : <CartPage />
+    element: <CartPage />
   },
   {
     path: "/checkout",
-    element: !token ? <LoginPage /> : <CheckoutPage />
+    element: <CheckoutPage />
   },
   {
     path: "/shop/category/:categoryName",
-    element: !token ? <LoginPage /> : <ProductsByCategoriesPage />
+    element: <ProductsByCategoriesPage />
   },
   {
     path: "/login",
-    element: token ? <HomePage /> : <LoginPage />
+    element: <LoginPage />
   },
   {
     path: "/register",
-    element: token ? <HomePage /> : <RegisterPage />
+    element: <RegisterPage />
   },
 ])
 

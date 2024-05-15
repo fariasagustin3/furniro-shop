@@ -3,8 +3,8 @@ import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
-import { products } from "../data"
 import { Link, useParams } from "react-router-dom"
+import axios from "axios"
 
 const sortOptions = [
   {
@@ -20,6 +20,34 @@ const sortOptions = [
 const ProductsByCategoriesPage = () => {
   const [selected, setSelected] = useState(1)
   const { categoryName } = useParams()
+  const [products, setProducts] = useState([])
+  const [category, setCategory] = useState([])
+
+  useEffect(() => {
+    const fetchProductsByCategories = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/products/${categoryName}/list`)
+        setProducts(response.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchProductsByCategories()
+  }, [])
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/categories/${categoryName}/category`)
+        setCategory(response.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchCategory()
+  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -28,7 +56,7 @@ const ProductsByCategoriesPage = () => {
   return (
     <main className="overflow-x-hidden">
       <Navbar />
-      <Portrait page={categoryName} />
+      <Portrait page={categoryName} description={category?.description} />
 
       {/* filters */}
       <div className="px-10 md:px-40 py-10 w-screen bg-[#F9F1E7] mb-10">
@@ -57,29 +85,29 @@ const ProductsByCategoriesPage = () => {
       {/* product list */}
       <div className="w-full h-full px-20">
         <div className="flex flex-wrap items-start justify-center gap-10">
-          {products.slice(0, 16).map((product) => (
+          {products?.slice(0, 16)?.map((product) => (
             // product item
-            <Link key={product.id} to={`/shop/${product.id}`}>
+            <Link key={product?._id} to={`/shop/${product?._id}`}>
               <div className="relative w-56 h-96 bg-[#f0f1f3]">
-                {product.trending && (
+                {product?.trending && (
                   <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
                     <div className="flex items-center justify-center w-full h-full">
                       <span className="text-[8px] text-white">TOP</span>
                     </div>
                   </div>
                 )}
-                {product.discount && (
+                {product?.discount && (
                   <div className="absolute top-2 left-2 bg-red-400 w-7 h-7 rounded-full">
                     <div className="flex items-center justify-center w-full h-full">
-                      <span className="text-[8px] text-white">-{product.discount}%</span>
+                      <span className="text-[8px] text-white">-{product?.discount}%</span>
                     </div>
                   </div>
                 )}
-                <img src={product.image} alt="" className="w-56 h-72 object-cover" />
+                <img src={product?.image} alt="" className="w-56 h-72 object-cover" />
                 <div className="px-3 py-2 flex flex-col gap-2">
-                  <span className="text-sm font-bold text-[#3A3A3A]">{product.title}</span>
-                  <span className="text-xs font-medium text-[#898989]">{product.categoryName}</span>
-                  <span className="text-sm font-bold text-[#3A3A3A]">${product.price}</span>
+                  <span className="text-sm font-bold text-[#3A3A3A]">{product?.title}</span>
+                  <span className="text-xs font-medium text-[#898989]">{product?.categoryName}</span>
+                  <span className="text-sm font-bold text-[#3A3A3A]">${product?.price}</span>
                 </div>
               </div>
             </Link>

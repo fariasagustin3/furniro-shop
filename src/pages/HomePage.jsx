@@ -3,20 +3,38 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { isMobile } from 'react-device-detect';
 import { useEffect, useState } from "react";
-import { categories, products } from '../data'
+import { products } from '../data'
+import axios from "axios";
 
 const HomePage = () => {
   const [offset, setOffset] = useState(0);
   const [trendingProducts, setTrendingProducts] = useState([]);
+  const [categories, setCategories] = useState([])
 
   useEffect(() => {
-    const arr = []
-    products.map((product) => {
-      if (product.trending) {
-        arr.push(product)
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/categories/list");
+        setCategories(response.data);
+      } catch (err) {
+        console.log(err);
       }
-    })
-    setTrendingProducts(arr)
+    }
+
+    fetchCategories();
+  }, [])
+
+  useEffect(() => {
+    const fetchTrendingProducts = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/products/trending");
+        setTrendingProducts(response.data)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchTrendingProducts()
     window.scrollTo(0, 0)
   }, [])
 
@@ -67,10 +85,10 @@ const HomePage = () => {
           >
 
             {/* category item */}
-            {categories.map((category) => (
-              <Link to={`/shop/category/${category.name}`}>
-                <div key={category.id} className="flex flex-col gap-4 min-w-56">
-                  <img src={category.image} className="w-56 h-80 object-cover" alt="" />
+            {categories?.map((category) => (
+              <Link to={`/shop/category/${category?.name}`}>
+                <div key={category?._id} className="flex flex-col gap-4 min-w-56">
+                  <img src={category?.image} className="w-56 h-80 object-cover" alt="" />
                   <span className="font-bold text-md text-center text-[#333333]">{category.name}</span>
                 </div>
               </Link>
@@ -90,27 +108,27 @@ const HomePage = () => {
         <div className="flex flex-wrap justify-center items-start gap-10 ">
           {trendingProducts?.slice(0, 8).map((product) => (
             // product item
-            <Link to={`/shop/${product.id}`}>
-              <div key={product.id} className="relative w-56 h-96 bg-[#dfe0e2]">
-                {product.trending && (
+            <Link to={`/shop/${product._id}`}>
+              <div key={product._id} className="relative w-56 h-96 bg-[#dfe0e2]">
+                {product?.trending && (
                   <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
                     <div className="flex items-center justify-center w-full h-full">
                       <span className="text-[8px] text-white">TOP</span>
                     </div>
                   </div>
                 )}
-                {product.discount && (
+                {product?.discount && (
                   <div className="absolute top-2 left-2 bg-red-400 w-7 h-7 rounded-full">
                     <div className="flex items-center justify-center w-full h-full">
-                      <span className="text-[8px] text-white">-{product.discount}%</span>
+                      <span className="text-[8px] text-white">-{product?.discount}%</span>
                     </div>
                   </div>
                 )}
-                <img src={product.image} alt="" className="w-56 h-72 object-cover" />
+                <img src={product?.image} alt="" className="w-56 h-72 object-cover" />
                 <div className="px-3 py-2 flex flex-col gap-2">
-                  <span className="text-sm font-bold text-[#3A3A3A]">{product.title}</span>
-                  <span className="text-xs font-medium text-[#898989]">{product.categoryName}</span>
-                  <span className="text-sm font-bold text-[#3A3A3A]">${product.price}</span>
+                  <span className="text-sm font-bold text-[#3A3A3A]">{product?.title}</span>
+                  <span className="text-xs font-medium text-[#898989]">{product?.categoryName}</span>
+                  <span className="text-sm font-bold text-[#3A3A3A]">${product?.price}</span>
                 </div>
               </div>
             </Link>
