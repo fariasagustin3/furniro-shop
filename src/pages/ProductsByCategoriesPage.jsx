@@ -31,7 +31,7 @@ const ProductsByCategoriesPage = () => {
   useEffect(() => {
     const fetchProductsByCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/${categoryName}/list?page=${currentPage}&limit=${productsPerPage}&sort=${sorted}`)
+        const response = await axios.get(`https://furniro-app-backend.onrender.com/products/${categoryName}/list?page=${currentPage}&limit=${productsPerPage}&sort=${sorted}`)
         setProducts(response.data)
       } catch (err) {
         console.log(err);
@@ -44,7 +44,7 @@ const ProductsByCategoriesPage = () => {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/categories/${categoryName}/category`)
+        const response = await axios.get(`https://furniro-app-backend.onrender.com/categories/${categoryName}/category`)
         setCategory(response.data)
       } catch (err) {
         console.log(err);

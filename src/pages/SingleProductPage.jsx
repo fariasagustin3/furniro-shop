@@ -4,6 +4,8 @@ import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { ToastContainer, toast } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 const properties = {
   Width: "20cm",
@@ -22,7 +24,7 @@ const SingleProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/${id}/product`);
+        const response = await axios.get(`https://furniro-app-backend.onrender.com/products/${id}/product`);
         setProduct(response.data);
       } catch (err) {
         console.log(err);
@@ -32,6 +34,32 @@ const SingleProductPage = () => {
     fetchProduct();
     window.scrollTo(0, 0)
   }, [])
+
+  const addToCart = () => {
+    const cartProductsArray = [];
+    const productsItem = {
+      id: product?._id,
+      image: product?.image,
+      title: product?.title,
+      price: product?.price,
+      quantity: quantity,
+      subtotal: quantity * product?.price,
+    }
+
+    toast.success("Product added to cart")
+    
+    const localStorageProductsCart = localStorage.getItem("cart");
+    const localStorageProductsCartToJSON = JSON.parse(localStorageProductsCart)
+
+    if(!localStorageProductsCart) {
+      cartProductsArray.push(productsItem);
+      const cartProductStringified = JSON.stringify(cartProductsArray)
+      localStorage.setItem("cart", cartProductStringified);
+    } else {
+      localStorageProductsCartToJSON.push(productsItem)
+      localStorage.setItem("cart", JSON.stringify(localStorageProductsCartToJSON))
+    }
+  }
 
   return (
     <main className="overflow-x-hidden">
@@ -101,7 +129,12 @@ const SingleProductPage = () => {
                 </div>
 
                 {/* add to cart button */}
-                <button className="border-[2px] border-gray-600 w-max px-5 py-4 rounded-md text-sm font-semibold">ADD TO CART</button>
+                <button
+                  onClick={addToCart}
+                  className="border-[2px] border-gray-600 w-max px-5 py-4 rounded-md text-sm font-semibold"
+                >
+                  ADD TO CART
+                </button>
               </div>
               <hr />
 
@@ -154,6 +187,7 @@ const SingleProductPage = () => {
       </div>
       <Banner />
       <Footer />
+      <ToastContainer />
     </main>
   )
 }
