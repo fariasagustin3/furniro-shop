@@ -24,13 +24,13 @@ const ProductsPage = () => {
   const [selected, setSelected] = useState(1)
   const [products, setProducts] = useState([]);
   const [productsPerPage, setProductsPerPage] = useState(16)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(0)
   const [sorted, setSorted] = useState(-1)
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/list?page=${currentPage}&limit=${productsPerPage || 16}&sort=${parseInt(sorted)}`)
+        const response = await axios.get(`http://localhost:3001/products/list?page=${currentPage + 1}&limit=${productsPerPage || 16}&sort=${parseInt(sorted)}`)
         setProducts(response.data)
       } catch (err) {
         console.log(err);
@@ -49,6 +49,7 @@ const ProductsPage = () => {
   }
 
   const handlePageChange = (pageNumber) => {
+    console.log(pageNumber)
     setSelected(pageNumber);
     setCurrentPage(pageNumber)
   }
@@ -60,10 +61,6 @@ const ProductsPage = () => {
     }
 
     return pages;
-  }
-
-  const handleSorted = (value) => {
-    setSorted(value)
   }
 
   return (
@@ -130,8 +127,8 @@ const ProductsPage = () => {
           <div className="w-full flex flex-wrap items-center justify-center gap-5 my-10">
             {generatePages(products?.totalPages).map((page) => (
               <button
-                onClick={handlePageChange}
-                className={selected === 1 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}
+                onClick={() => handlePageChange(page)}
+                className={selected === (page) ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}
               >
                 {page + 1}
               </button>
