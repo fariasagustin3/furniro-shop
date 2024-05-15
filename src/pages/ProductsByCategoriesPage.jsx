@@ -9,11 +9,13 @@ import axios from "axios"
 const sortOptions = [
   {
     id: 1,
-    option: "Low Price"
+    option: "Low Price",
+    value: 1
   },
   {
     id: 2,
-    option: "High Price"
+    option: "High Price",
+    value: -1
   },
 ]
 
@@ -22,11 +24,14 @@ const ProductsByCategoriesPage = () => {
   const { categoryName } = useParams()
   const [products, setProducts] = useState([])
   const [category, setCategory] = useState([])
+  const [productsPerPage, setProductsPerPage] = useState(16)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [sorted, setSorted] = useState(-1)
 
   useEffect(() => {
     const fetchProductsByCategories = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/${categoryName}/list`)
+        const response = await axios.get(`http://localhost:3001/products/${categoryName}/list?page=${currentPage}&limit=${productsPerPage}&sort=${sorted}`)
         setProducts(response.data)
       } catch (err) {
         console.log(err);
@@ -34,7 +39,7 @@ const ProductsByCategoriesPage = () => {
     }
 
     fetchProductsByCategories()
-  }, [])
+  }, [sorted, currentPage, productsPerPage])
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -49,6 +54,25 @@ const ProductsByCategoriesPage = () => {
     fetchCategory()
   }, [])
 
+  const handleShowChange = (event) => {
+    setProductsPerPage(parseInt(event.target.value))
+  }
+
+  const handlePageChange = (pageNumber) => {
+    console.log(pageNumber)
+    setSelected(pageNumber);
+    setCurrentPage(pageNumber)
+  }
+
+  const generatePages = (number) => {
+    let pages = [];
+    for (let i = 1; i < number + 1; i++) {
+      pages.push(i);
+    }
+
+    return pages;
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -61,20 +85,20 @@ const ProductsByCategoriesPage = () => {
       {/* filters */}
       <div className="px-10 md:px-40 py-10 w-screen bg-[#F9F1E7] mb-10">
         <div className="flex flex-col md:flex-row gap-5 md:gap-0 items-center justify-between">
-          <span className="font-semibold text-sm">{"Showing 1–16 of 32 results"}</span>
+        <span className="font-semibold text-sm">Showing {products?.products?.length} of {products?.totalProducts}</span>
           {/* filter items */}
           <div className="flex gap-10 flex-col items-center md:flex-row">
             {/* products quantity */}
             <div className="flex items-center gap-2">
               <span>Show</span>
-              <input type="number" className="w-16 h-10 px-2 bg-white border-none focus:outline-none" />
+              <input onChange={handleShowChange} type="number" className="w-16 h-10 px-2 bg-white border-none focus:outline-none" />
             </div>
             <div className="flex items-center gap-2">
-              <span>Short By</span>
-              <select className="w-40 text-sm py-3">
+              <span>Sort By</span>
+              <select onChange={(e) => setSorted(parseInt(e.target.value))} className="w-40 text-sm py-3 focus:outline-none">
                 <option disabled selected>Sort By</option>
                 {sortOptions.map((opt) => (
-                  <option key={opt.id}>{opt.option}</option>
+                  <option key={opt.id} value={opt.value}>{opt.option}</option>
                 ))}
               </select>
             </div>
@@ -85,7 +109,7 @@ const ProductsByCategoriesPage = () => {
       {/* product list */}
       <div className="w-full h-full px-20">
         <div className="flex flex-wrap items-start justify-center gap-10">
-          {products?.slice(0, 16)?.map((product) => (
+          {products?.products?.slice(0, 16)?.map((product) => (
             // product item
             <Link key={product?._id} to={`/shop/${product?._id}`}>
               <div className="relative w-56 h-96 bg-[#f0f1f3]">
@@ -114,12 +138,15 @@ const ProductsByCategoriesPage = () => {
           ))}
 
           {/* pagination */}
-          <div className="w-full flex items-center justify-center gap-5 my-10">
-            <button onClick={() => setSelected(1)} className={selected === 1 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>1</button>
-            <button onClick={() => setSelected(2)} className={selected === 2 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>2</button>
-            <button onClick={() => setSelected(3)} className={selected === 3 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>3</button>
-            <button onClick={() => setSelected(4)} className={selected === 4 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>4</button>
-            <button onClick={() => setSelected(5)} className={selected === 5 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>5</button>
+          <div className="w-full flex flex-wrap items-center justify-center gap-5 my-10">
+            {generatePages(products?.totalPages).map((page) => (
+              <button
+                onClick={() => handlePageChange(page)}
+                className={selected === (page) ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}
+              >
+                {page}
+              </button>
+            ))}
           </div>
         </div>
       </div>

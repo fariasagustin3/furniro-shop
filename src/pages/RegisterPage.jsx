@@ -16,7 +16,7 @@ const RegisterPage = () => {
     event.preventDefault();
 
     try {
-      await axios.post("http://localhost:3001/auth/register", input);
+      await axios.post("https://furniro-app-backend.onrender.com/auth/register", input);
       setInput({
         firstName: "",
         lastName: "",

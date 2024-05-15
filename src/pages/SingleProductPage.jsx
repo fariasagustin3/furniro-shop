@@ -3,6 +3,7 @@ import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { useEffect, useState } from "react"
+import axios from "axios"
 
 const properties = {
   Width: "20cm",
@@ -15,9 +16,20 @@ const properties = {
 const SingleProductPage = () => {
   const { id } = useParams()
   const [quantity, setQuantity] = useState(1);
-  const [tab, setTab] = useState("description")
+  const [tab, setTab] = useState("description");
+  const [product, setProduct] = useState({})
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/products/${id}/product`);
+        setProduct(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchProduct();
     window.scrollTo(0, 0)
   }, [])
 
@@ -39,35 +51,33 @@ const SingleProductPage = () => {
             </svg>
           </span>
           {/* acá hay que controlar el nombre del producto de manera dinámica */}
-          <span className="text-sm font-medium text-black">Aasgard Sofa</span>
+          <span className="text-sm font-medium text-black">{product?.title}</span>
         </div>
       </div>
 
       {/* product data */}
       <div className="px-10 md:mx-20 flex flex-col gap-10 mt-10 mb-10">
-        <div className="w-full flex flex-col md:flex-row md:items-start items-center justify-center gap-10 md:h-full md:-mb-32">
+        <div className="w-full flex flex-col md:flex-row md:items-start items-center justify-center gap-10 md:h-full md:-mb-60">
 
           {/* left side */}
-          <div className="flex-1 bg-[#F9F1E7] w-80 md:w-full px-10 py-10 rounded-md">
-            <img src="/single-product.png" alt="" className="w-full" />
+          <div className="flex-1 flex items-center justify-center bg-[#F9F1E7] w-full md:h-full md:w-full px-10 py-10 rounded-md">
+            <img src={product?.image} alt="" className="w-full md:w-96 md:h-96 md:object-cover rounded-md" />
           </div>
 
           {/* right side */}
           <div className="flex-[1.5] h-screen">
             <div className="flex flex-col gap-5">
-              <h1 className="m-0 text-[40px] font-medium">Aasgard Sofa</h1>
-              <span className="text-[20px] font-medium text-[#9F9F9F]">$20</span>
+              <h1 className="m-0 text-[40px] font-medium">{product?.title}</h1>
+              <span className="text-[20px] font-medium text-[#9F9F9F]">${product?.price}</span>
               <p className="md:text-xs text-sm font-medium md:w-2/3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla molestiae animi at cupiditate
-                aliquam eveniet delectus non qui quasi doloremque facilis eos, illo sit facere aliquid minima
-                quos accusantium sed?
+                {product?.shortDescription}
               </p>
 
               {/* colors */}
               <div className="flex flex-row items-center gap-3">
-                <div className="w-10 h-10 bg-blue-400 rounded-full" />
-                <div className="w-10 h-10 bg-green-400 rounded-full" />
-                <div className="w-10 h-10 bg-yellow-400 rounded-full" />
+                {product?.colors?.map((color, index) => (
+                  <div key={index} className={`w-10 h-10 bg-[#${color}] rounded-full`} />
+                ))}
               </div>
 
               {/* buttons */}
@@ -99,11 +109,11 @@ const SingleProductPage = () => {
               <div className="mt-5 flex flex-col gap-3">
                 <div className="flex flex-row items-center gap-3 text-gray-400">
                   <span>SKU: </span>
-                  <span>HJD7N8DCHSDI8SDI7I7GS</span>
+                  <span>{product?.SKU}</span>
                 </div>
                 <div className="flex flex-row items-center gap-3 text-gray-400">
                   <span>Category: </span>
-                  <span>Living Room</span>
+                  <span>{product?.categoryName}</span>
                 </div>
               </div>
             </div>
@@ -125,21 +135,14 @@ const SingleProductPage = () => {
           // description
           <div className="flex flex-col items-center">
             <p className="text-[#9F9F9F] text-justify">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Quidem animi natus similique a voluptates in accusamus
-              soluta tempora voluptate, facere iste odit, neque excepturi
-              quo hic doloribus impedit dignissimos explicabo? Lorem, ipsum
-              dolor sit amet consectetur adipisicing elit. Omnis molestiae
-              ratione esse optio iure accusamus, vel aspernatur velit
-              exercitationem, nam obcaecati impedit aliquid veniam! Ad
-              rerum facere dicta praesentium quod?
+              {product?.longDescription}
             </p>
           </div>
         ) : (
           // additional information
           <div className="w-full flex justify-center ">
             <table className="md:w-1/2 w-full">
-              {Object.entries(properties).map((prop, index) => (
+              {Object.entries(product?.additionalInformation)?.map((prop, index) => (
                 <tr key={index} className={(index % 2 === 0 || index === 0) ? "bg-gray-100" : "bg-slate-200"}>
                   <td className="text-center font-semibold py-5 text-sm">{prop[0]}</td>
                   <td className="text-center text-sm">{prop[1]}</td>

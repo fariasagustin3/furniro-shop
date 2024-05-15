@@ -24,13 +24,13 @@ const ProductsPage = () => {
   const [selected, setSelected] = useState(1)
   const [products, setProducts] = useState([]);
   const [productsPerPage, setProductsPerPage] = useState(16)
-  const [currentPage, setCurrentPage] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
   const [sorted, setSorted] = useState(-1)
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/products/list?page=${currentPage + 1}&limit=${productsPerPage || 16}&sort=${parseInt(sorted)}`)
+        const response = await axios.get(`https://furniro-app-backend.onrender.com/products/list?page=${currentPage}&limit=${productsPerPage || 16}&sort=${parseInt(sorted)}`)
         setProducts(response.data)
       } catch (err) {
         console.log(err);
@@ -56,7 +56,7 @@ const ProductsPage = () => {
 
   const generatePages = (number) => {
     let pages = [];
-    for(let i = 0; i < number; i++) {
+    for (let i = 1; i < number + 1; i++) {
       pages.push(i);
     }
 
@@ -130,20 +130,14 @@ const ProductsPage = () => {
                 onClick={() => handlePageChange(page)}
                 className={selected === (page) ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}
               >
-                {page + 1}
+                {page}
               </button>
             ))}
-            {/* <button onClick={() => setSelected(2)} className={selected === 2 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>2</button>
-            <button onClick={() => setSelected(3)} className={selected === 3 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>3</button>
-            <button onClick={() => setSelected(4)} className={selected === 4 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>4</button>
-            <button onClick={() => setSelected(5)} className={selected === 5 ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}>5</button> */}
           </div>
         </div>
       </div>
-      
-      {/* {!isMobile && ( */}
-        <Banner />
-      {/* // )} */}
+
+      <Banner />
       <Footer />
     </main >
   )

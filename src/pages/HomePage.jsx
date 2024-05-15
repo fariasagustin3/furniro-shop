@@ -14,7 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/categories/list");
+        const response = await axios.get("https://furniro-app-backend.onrender.com/categories/list");
         setCategories(response.data);
       } catch (err) {
         console.log(err);
@@ -27,7 +27,7 @@ const HomePage = () => {
   useEffect(() => {
     const fetchTrendingProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/products/trending");
+        const response = await axios.get("https://furniro-app-backend.onrender.com/products/trending");
         setTrendingProducts(response.data)
       } catch (err) {
         console.log(err);
