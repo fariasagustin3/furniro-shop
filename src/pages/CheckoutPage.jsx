@@ -80,10 +80,9 @@ const CheckoutPage = () => {
     }
 
     try {
-      console.log(newOrder)
       await axios.post("https://furniro-app-backend.onrender.com/orders/create", newOrder);
-      console.log(newOrder)
       toast.success("Order created successfully.")
+      window.location.reload()
       setInput({
         firstName: "",
         lastName: "",
