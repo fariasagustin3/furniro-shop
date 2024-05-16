@@ -14,9 +14,10 @@ import ProductsByCategoriesPage from './pages/ProductsByCategoriesPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import { jwtDecode } from 'jwt-decode';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const token = localStorage.getItem("token")
-if(token) {
+if (token) {
   const decodedToken = jwtDecode(token)
 }
 

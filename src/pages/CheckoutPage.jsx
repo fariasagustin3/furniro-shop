@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
@@ -6,6 +6,8 @@ import Portrait from "../components/Portrait"
 import axios from "axios"
 import { ToastContainer, toast } from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
+import PayPalButton from "../components/PayPalButton"
 
 const CheckoutPage = () => {
   const [products, setProducts] = useState([])
@@ -25,6 +27,18 @@ const CheckoutPage = () => {
     additionalInformation: "",
   })
 
+  const firstName = useRef()
+  const lastName = useRef()
+  const companyName = useRef()
+  const country = useRef()
+  const address = useRef()
+  const town = useRef()
+  const state = useRef()
+  const zipCode = useRef()
+  const phone = useRef()
+  const email = useRef()
+  const additionalInformation = useRef()
+
   useEffect(() => {
     const cartProducts = JSON.parse(localStorage.getItem("cart"));
     setProducts(cartProducts);
@@ -38,7 +52,7 @@ const CheckoutPage = () => {
     setSubtotal(sum)
 
     window.scrollTo(0, 0)
-  }, [setTotal]);
+  }, []);
 
   const handleChange = (event) => {
     setInput({
@@ -48,27 +62,27 @@ const CheckoutPage = () => {
   }
 
   const handleCreateOrder = async (event) => {
-    event.preventDefault()
 
     const newOrder = {
       products: products,
       total: total,
-      firstName: input.firstName,
-      lastName: input.lastName,
-      lastName: input.lastName,
-      companyName: input.companyName,
-      country: input.country,
-      address: input.address,
-      town: input.town,
-      state: input.state,
-      zipCode: input.zipCode,
-      phone: input.phone,
-      email: input.email,
-      additionalInformation: input.additionalInformation,
+      firstName: firstName.current.value,
+      lastName: lastName.current.value,
+      companyName: companyName.current.value,
+      country: country.current.value,
+      address: address.current.value,
+      town: town.current.value,
+      state: state.current.value,
+      zipCode: zipCode.current.value,
+      phone: phone.current.value,
+      email: email.current.value,
+      additionalInformation: additionalInformation.current.value,
     }
 
     try {
+      console.log(newOrder)
       await axios.post("http://localhost:3001/orders/create", newOrder);
+      console.log(newOrder)
       toast.success("Order created successfully.")
       setInput({
         firstName: "",
@@ -85,6 +99,7 @@ const CheckoutPage = () => {
       })
 
       localStorage.removeItem("cart");
+      // window.location.reload()
     } catch (err) {
       console.log(err)
     }
@@ -105,11 +120,11 @@ const CheckoutPage = () => {
             <div className="flex flex-col md:flex-row items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">First Name</label>
-                <input name="firstName" value={input.firstName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={firstName} name="firstName" value={input.firstName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Last Name</label>
-                <input name="lastName" value={input.lastName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={lastName} name="lastName" value={input.lastName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -117,7 +132,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Company Name (optional)</label>
-                <input name="companyName" value={input.companyName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={companyName} name="companyName" value={input.companyName} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -125,7 +140,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Country / Region</label>
-                <input name="country" value={input.country} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={country} name="country" value={input.country} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -133,7 +148,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Street Address</label>
-                <input name="address" value={input.address} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={address} name="address" value={input.address} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -141,7 +156,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Town / City</label>
-                <input name="town" value={input.town} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={town} name="town" value={input.town} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -149,7 +164,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">State / Province</label>
-                <input name="state" value={input.state} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={state} name="state" value={input.state} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -157,7 +172,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">ZIP code</label>
-                <input name="zipCode" value={input.zipCode} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={zipCode} name="zipCode" value={input.zipCode} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -165,7 +180,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Phone</label>
-                <input name="phone" value={input.phone} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={phone} name="phone" value={input.phone} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -173,7 +188,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Email Address</label>
-                <input name="email" value={input.email} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={email} name="email" value={input.email} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
 
@@ -181,7 +196,7 @@ const CheckoutPage = () => {
             <div className="flex items-center gap-5 w-full">
               <div className="flex flex-col gap-1 w-full">
                 <label className="text-slate-800 font-semibold text-sm">Additional Information</label>
-                <input name="additionalInformation" value={input.additionalInformation} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
+                <input ref={additionalInformation} name="additionalInformation" value={input.additionalInformation} onChange={handleChange} type="text" className="px-3 py-2 focus:outline-none text-sm border-[1px] border-slate-600" />
               </div>
             </div>
           </div>
@@ -209,7 +224,8 @@ const CheckoutPage = () => {
                 <span className="font-extrabold text-sm">${total}</span>
               </div>
               <hr />
-              <button type="submit" className="bg-[#B88E2F] py-3 font-semibold text-sm text-white">BUY</button>
+              {/* <button type="submit" className="bg-[#B88E2F] py-3 font-semibold text-sm text-white">BUY</button> */}
+              <PayPalButton total={total} handleCreateOrder={handleCreateOrder} />
             </div>
           </div>
         </form>
