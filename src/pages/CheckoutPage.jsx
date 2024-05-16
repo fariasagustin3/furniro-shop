@@ -82,7 +82,7 @@ const CheckoutPage = () => {
     try {
       await axios.post("https://furniro-app-backend.onrender.com/orders/create", newOrder);
       toast.success("Order created successfully.")
-      window.location.reload()
+      window.location.href = "https://furniro-shop-ten.vercel.app/"
       setInput({
         firstName: "",
         lastName: "",
