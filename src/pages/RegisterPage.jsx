@@ -25,7 +25,7 @@ const RegisterPage = () => {
       });
       toast.success("User register success!")
       setTimeout(() => {
-        window.location.href = "http://localhost:5173/login"
+        window.location.href = "https://furniro-shop-ten.vercel.app/login"
       }, 2000)
     } catch (err) {
       toast.error("Something went wrong")
