@@ -30,8 +30,8 @@ const CheckoutPage = () => {
     setProducts(cartProducts);
 
     let sum = 0;
-    for (let i = 0; i < cartProducts.length; i++) {
-      sum += cartProducts[i].subtotal
+    for (let i = 0; i < cartProducts?.length; i++) {
+      sum += cartProducts[i]?.subtotal
     }
 
     setTotal(sum)
