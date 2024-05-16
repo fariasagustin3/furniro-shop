@@ -1,13 +1,29 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Banner from "../components/Banner"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import Portrait from "../components/Portrait"
 
 const CheckoutPage = () => {
+  const [products, setProducts] = useState([])
+  const [subtotal, setSubtotal] = useState(0)
+  const [total, setTotal] = useState(0)
+
   useEffect(() => {
+    const cartProducts = JSON.parse(localStorage.getItem("cart"));
+    setProducts(cartProducts);
+    // console.log(cartProducts.length)
+
+    let sum = 0;
+    for(let i = 0; i < cartProducts.length; i++) {
+      sum += cartProducts[i].subtotal
+    }
+
+    setTotal(sum)
+    setSubtotal(sum)
+
     window.scrollTo(0, 0)
-  }, [])
+  }, [setTotal])
 
   return (
     <main className="overflow-x-hidden">
@@ -112,17 +128,20 @@ const CheckoutPage = () => {
                 <span className="font-medium text-2xl">Product</span>
                 <span className="font-medium text-2xl">Subtotal</span>
               </div>
-              <div className="flex flex-row items-center justify-between">
-                <span className="font-medium text-sm">Aasgard sofa x 1</span>
-                <span className="font-medium text-sm">$1200</span>
-              </div>
+              {products?.map((product) => (
+                <div key={product?.id} className="flex flex-row items-center justify-between">
+                  <span className="font-medium text-sm">{product?.title} x {product?.quantity}</span>
+                  <span className="font-medium text-sm">${product?.subtotal}</span>
+                </div>
+              ))}
+              <hr />
               <div className="flex flex-row items-center justify-between">
                 <span className="font-medium text-sm">Subtotal</span>
-                <span className="font-medium text-sm">$1200</span>
+                <span className="font-medium text-sm">${subtotal}</span>
               </div>
               <div className="flex flex-row items-center justify-between">
                 <span className="font-extrabold text-sm">Total</span>
-                <span className="font-extrabold text-sm">$1200</span>
+                <span className="font-extrabold text-sm">${total}</span>
               </div>
               <hr />
             </div>

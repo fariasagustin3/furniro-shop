@@ -26,7 +26,7 @@ const CartPage = () => {
     })
 
     window.scrollTo(0, 0)
-  }, [])
+  }, [products?.products?.length])
 
   const deleteItem = (id) => {
     const cartProducts = JSON.parse(localStorage.getItem("cart")); // take products from local storage and parse them to JSON
