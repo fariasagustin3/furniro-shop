@@ -59,7 +59,6 @@ const ProductsByCategoriesPage = () => {
   }
 
   const handlePageChange = (pageNumber) => {
-    console.log(pageNumber)
     setSelected(pageNumber);
     setCurrentPage(pageNumber)
   }
@@ -141,6 +140,7 @@ const ProductsByCategoriesPage = () => {
           <div className="w-full flex flex-wrap items-center justify-center gap-5 my-10">
             {generatePages(products?.totalPages).map((page) => (
               <button
+                key={page}
                 onClick={() => handlePageChange(page)}
                 className={selected === (page) ? "w-10 h-10 px-5 py-5 bg-[#B88E2F] flex items-center justify-center font-bold text-white rounded-md" : "w-10 h-10 px-5 py-5 bg-[#F9F1E7] flex items-center justify-center font-bold text-black rounded-md"}
               >

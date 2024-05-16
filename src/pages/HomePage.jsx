@@ -86,8 +86,8 @@ const HomePage = () => {
 
             {/* category item */}
             {categories?.map((category) => (
-              <Link to={`/shop/category/${category?.name}`}>
-                <div key={category?._id} className="flex flex-col gap-4 min-w-56">
+              <Link key={category?._id} to={`/shop/category/${category?.name}`}>
+                <div className="flex flex-col gap-4 min-w-56">
                   <img src={category?.image} className="w-56 h-80 object-cover" alt="" />
                   <span className="font-bold text-md text-center text-[#333333]">{category.name}</span>
                 </div>
@@ -108,8 +108,8 @@ const HomePage = () => {
         <div className="flex flex-wrap justify-center items-start gap-10 ">
           {trendingProducts?.slice(0, 8).map((product) => (
             // product item
-            <Link to={`/shop/${product._id}`}>
-              <div key={product._id} className="relative w-56 h-96 bg-[#dfe0e2]">
+            <Link key={product._id} to={`/shop/${product._id}`}>
+              <div className="relative w-56 h-96 bg-[#dfe0e2]">
                 {product?.trending && (
                   <div className="absolute top-2 right-2 bg-teal-400 w-7 h-7 rounded-full">
                     <div className="flex items-center justify-center w-full h-full">

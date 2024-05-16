@@ -20,6 +20,7 @@ const SingleProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState("description");
   const [product, setProduct] = useState({})
+  const [productsLength, setProductsLength] = useState(undefined)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -57,13 +58,14 @@ const SingleProductPage = () => {
       localStorage.setItem("cart", cartProductStringified);
     } else {
       localStorageProductsCartToJSON.push(productsItem)
+      setProductsLength(localStorageProductsCartToJSON.length)
       localStorage.setItem("cart", JSON.stringify(localStorageProductsCartToJSON))
     }
   }
 
   return (
     <main className="overflow-x-hidden">
-      <Navbar />
+      <Navbar products={productsLength} />
       <div className="w-full py-10 bg-[#F9F1E7]">
         <div className="flex items-center gap-4 px-20">
           <span className="text-sm font-medium text-[#9F9F9F]">Home</span>
